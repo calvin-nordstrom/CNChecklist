@@ -18,7 +18,7 @@ public class Main extends Application {
     private static final String TITLE = "CNChecklist";
     private static final String VERSION = "1.0";
     private static final double WIDTH = 540;
-    private static final double HEIGHT = 720;
+    private static final double HEIGHT = 480;
     private static final double MIN_WIDTH = 270;
     private static final double MIN_HEIGHT = 240;
     private final MainModel model = new MainModel();
