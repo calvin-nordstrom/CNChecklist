@@ -1,0 +1,102 @@
+* {
+  -cn-checklist-hover-bg-color: rgba(0, 0, 0, 0.05);
+
+  -cn-checklist-checked-bg-color: rgba(48, 160, 80, 0.25);
+  -cn-checklist-checked-bg-hover-color: rgba(48, 160, 80, 0.4);
+
+  -cn-checklist-unchecked-bg-color: rgba(240, 64, 48, 0.2);
+  -cn-checklist-unchecked-bg-hover-color: rgba(240, 64, 48, 0.3);
+
+  -cn-checklist-checkbox-bg-color: rgb(48, 160, 80);
+  -cn-checklist-checkbox-check-bg-color: rgb(255, 255, 255);
+}
+
+.root {
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+}
+
+/* Generic styles */
+
+.center-left {
+  -fx-alignment: center-left;
+}
+
+.center-right {
+  -fx-alignment: center-right;
+}
+
+/* Checklist view styles */
+
+.checklist-view {
+  -fx-box-border: transparent;
+}
+
+/* Checklist tree view styles */
+
+.checklist-tree-view {
+  
+}
+
+/* Checklist tree item styles */
+
+.checklist-tree-item {
+  -fx-padding: 4 8 4 8;
+}
+
+.checklist-tree-item:hover {
+  
+}
+
+.checklist-tree-item-full {
+
+}
+
+.checklist-tree-item-full:hover {
+  -fx-background-color: -cn-checklist-hover-bg-color;
+}
+
+.checked {
+  /* -fx-background-color: -cn-checklist-checked-bg-color; */
+}
+
+.checked:hover {
+  /* -fx-background-color: -cn-checklist-checked-bg-hover-color; */
+}
+
+.unchecked {
+  /* -fx-background-color: -cn-checklist-unchecked-bg-color; */
+}
+
+.unchecked:hover {
+  /* -fx-background-color: -cn-checklist-unchecked-bg-hover-color; */
+}
+
+.checklist-tree-item-center {
+  -fx-spacing: 4;
+}
+
+.checklist-tree-item-button {
+  -fx-cursor: hand;
+  -fx-font-size: 16;
+  -fx-box-border: transparent;
+  -fx-background-color: transparent;
+}
+
+.checklist-tree-item-checkbox:selected > .box {
+  -fx-background-color: -cn-checklist-checkbox-bg-color;
+}
+
+.checklist-tree-item-checkbox:selected > .box > .mark {
+  -fx-background-color: -cn-checklist-checkbox-check-bg-color;
+}
+
+.checklist-tree-item-textfield {
+  -fx-box-border: transparent;
+  -fx-background-color: transparent;
+  -fx-padding: 4 7 4 0;
+}
+
+.checklist-tree-item-right {
+  -fx-padding: 0 0 0 4;
+}
