@@ -6,7 +6,7 @@
 
     <groupId>com.calvinnordstrom</groupId>
     <artifactId>cnchecklist</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>CNChecklist</name>
 
     <properties>
