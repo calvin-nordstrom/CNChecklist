@@ -102,6 +102,7 @@ public class ChecklistView {
             private void init() {
                 Button createButton = ViewUtils.createIconButton(FontIcon.of(BootstrapIcons.PLUS));
                 createButton.setTooltip(new Tooltip("New sub-item"));
+                createButton.setFocusTraversable(false);
                 createButton.setOnMouseClicked(_ -> {
                     controller.createItem(item, new ChecklistItem());
                     refresh();
@@ -109,6 +110,7 @@ public class ChecklistView {
 
                 CheckBox checkBox = new CheckBox();
                 checkBox.setSelected(item.isChecked());
+                checkBox.setFocusTraversable(false);
                 checkBox.selectedProperty().addListener((_, _, newValue) -> {
                     controller.check(item, newValue);
                     refresh();
@@ -125,6 +127,7 @@ public class ChecklistView {
 
                 Button deleteButton = ViewUtils.createIconButton(FontIcon.of(BootstrapIcons.TRASH));
                 deleteButton.setTooltip(new Tooltip("Delete item"));
+                deleteButton.setFocusTraversable(false);
                 deleteButton.setOnMouseClicked(_ -> {
                     controller.deleteItem(item);
                     refresh();
