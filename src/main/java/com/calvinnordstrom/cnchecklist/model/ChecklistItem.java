@@ -9,6 +9,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents an item in a tree graph checklist structure. Each
+ * {@code ChecklistItem} supports an associated text label, checked state, and
+ * child items of the same type. This class also supports serialization and
+ * some JavaFX property bindings.
+ */
 public class ChecklistItem implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -16,42 +22,107 @@ public class ChecklistItem implements Serializable {
     private transient BooleanProperty checked = new SimpleBooleanProperty();
     private final List<ChecklistItem> items = new ArrayList<>();
 
+    /**
+     * Constructs an empty {@code ChecklistItem} with no text.
+     */
     public ChecklistItem() {
         this("");
     }
 
+    /**
+     * Constructs a {@code ChecklistItem} with the specified text.
+     *
+     * @param text the text to display for this item
+     */
     public ChecklistItem(String text) {
         this.text = new SimpleStringProperty(text);
     }
 
+    /**
+     * Returns the text of this checklist item.
+     *
+     * @return the item's text
+     */
     public String getText() {
         return text.get();
     }
 
+    /**
+     * Sets the text of this checklist item.
+     *
+     * @param text the new text to set
+     */
     public void setText(String text) {
         this.text.set(text);
     }
 
+    /**
+     * Returns the JavaFX {@code StringProperty} for binding the text.
+     *
+     * @return the text property
+     */
     public StringProperty textProperty() {
         return text;
     }
 
+    /**
+     * Returns whether this item is checked.
+     *
+     * @return {@code true} if checked, {@code false} otherwise
+     */
     public boolean isChecked() {
         return checked.get();
     }
 
+    /**
+     * Sets the checked state of this item.
+     *
+     * @param checked {@code true} to mark as checked, {@code false} to uncheck
+     */
     public void setChecked(boolean checked) {
         this.checked.set(checked);
     }
 
+    /**
+     * Returns the JavaFX {@code BooleanProperty} for binding the checked state.
+     *
+     * @return the checked property
+     */
     public BooleanProperty checkedProperty() {
         return checked;
     }
 
+    /**
+     * Returns the list of child items contained within this checklist item.
+     *
+     * @return the list of child {@code ChecklistItem}s
+     */
     public List<ChecklistItem> getItems() {
         return items;
     }
 
+    /**
+     * Sets the checked state of this item and recursively applies
+     * the same state to all of its child items.
+     *
+     * @param checked {@code true} to check all items, {@code false} to uncheck
+     */
+    public void check(boolean checked) {
+        setChecked(checked);
+
+        for (ChecklistItem item : items) {
+            item.check(checked);
+        }
+    }
+
+    /**
+     * Attempts to add a child item under the given parent within this hierarchy.
+     * If the parent is found (recursively), the child is added to it.
+     *
+     * @param parent the parent under which the child should be added
+     * @param child the child item to add
+     * @return {@code true} if the child was successfully added, {@code false} otherwise
+     */
     public boolean createItem(ChecklistItem parent, ChecklistItem child) {
         if (parent == this) {
             items.add(child);
@@ -67,14 +138,13 @@ public class ChecklistItem implements Serializable {
         return false;
     }
 
-    public void check(boolean checked) {
-        setChecked(checked);
-
-        for (ChecklistItem item : items) {
-            item.check(checked);
-        }
-    }
-
+    /**
+     * Attempts to delete the specified target item from this hierarchy.
+     * If the item is found (recursively), it is removed from its parent's list.
+     *
+     * @param target the item to remove
+     * @return {@code true} if the item was found and removed, {@code false} otherwise
+     */
     public boolean deleteItem(ChecklistItem target) {
         if (items.remove(target)) {
             return true;
