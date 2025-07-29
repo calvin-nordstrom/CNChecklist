@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents an item in a tree graph checklist structure. Each
@@ -168,6 +169,35 @@ public class ChecklistItem implements Serializable {
         }
 
         return false;
+    }
+
+    /**
+     * Recursively searches for the first {@code ChecklistItem} in this item's
+     * hierarchy that matches the given predicate.
+     * <p>
+     * This method performs a depth-first search starting from the current
+     * item. If the predicate evaluates to {@code true} for this item, it is
+     * returned immediately. Otherwise, the method continues searching through
+     * all child items recursively.
+     *
+     * @param predicate a condition to evaluate each {@code ChecklistItem}
+     *                  against
+     * @return the first {@code ChecklistItem} that matches the predicate, or
+     * {@code null} if none match
+     */
+    public ChecklistItem findItem(Predicate<ChecklistItem> predicate) {
+        if (predicate.test(this)) {
+            return this;
+        }
+
+        for (ChecklistItem item : items) {
+            ChecklistItem foundItem = item.findItem(predicate);
+            if (foundItem != null) {
+                return foundItem;
+            }
+        }
+
+        return null;
     }
 
     @Serial
