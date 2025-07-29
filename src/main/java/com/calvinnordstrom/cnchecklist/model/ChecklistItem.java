@@ -130,12 +130,17 @@ public class ChecklistItem implements Serializable {
      * @return {@code true} if the child was successfully added, {@code false} otherwise
      */
     public boolean createItem(ChecklistItem parent, ChecklistItem child) {
-        if (parent == this) {
+        if (this == parent) {
             items.add(child);
             return true;
         }
 
         for (ChecklistItem item : items) {
+            if (item == parent) {
+                item.items.add(child);
+                return true;
+            }
+
             if (item.createItem(parent, child)) {
                 return true;
             }
