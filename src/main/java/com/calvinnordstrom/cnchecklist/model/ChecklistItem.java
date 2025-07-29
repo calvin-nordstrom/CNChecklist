@@ -19,7 +19,7 @@ public class ChecklistItem implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private transient StringProperty text;
-    private transient BooleanProperty checked = new SimpleBooleanProperty();
+    private transient BooleanProperty checked;
     private final List<ChecklistItem> items = new ArrayList<>();
 
     /**
@@ -44,7 +44,7 @@ public class ChecklistItem implements Serializable {
      * @return the item's text
      */
     public String getText() {
-        return text.get();
+        return textProperty().get();
     }
 
     /**
@@ -53,7 +53,7 @@ public class ChecklistItem implements Serializable {
      * @param text the new text to set
      */
     public void setText(String text) {
-        this.text.set(text);
+        textProperty().set(text);
     }
 
     /**
@@ -62,6 +62,9 @@ public class ChecklistItem implements Serializable {
      * @return the text property
      */
     public StringProperty textProperty() {
+        if (text == null) {
+            text = new SimpleStringProperty(this, "text", "");
+        }
         return text;
     }
 
@@ -71,7 +74,7 @@ public class ChecklistItem implements Serializable {
      * @return {@code true} if checked, {@code false} otherwise
      */
     public boolean isChecked() {
-        return checked.get();
+        return checkedProperty().get();
     }
 
     /**
@@ -80,7 +83,7 @@ public class ChecklistItem implements Serializable {
      * @param checked {@code true} to mark as checked, {@code false} to uncheck
      */
     public void setChecked(boolean checked) {
-        this.checked.set(checked);
+        checkedProperty().set(checked);
     }
 
     /**
@@ -89,6 +92,9 @@ public class ChecklistItem implements Serializable {
      * @return the checked property
      */
     public BooleanProperty checkedProperty() {
+        if (checked == null) {
+            checked = new SimpleBooleanProperty(this, "checked", false);
+        }
         return checked;
     }
 
@@ -162,14 +168,14 @@ public class ChecklistItem implements Serializable {
     @Serial
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
-        out.writeObject(text.get());
-        out.writeBoolean(checked.get());
+        out.writeObject(getText());
+        out.writeBoolean(isChecked());
     }
 
     @Serial
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        text = new SimpleStringProperty((String) in.readObject());
-        checked = new SimpleBooleanProperty(in.readBoolean());
+        setText((String) in.readObject());
+        setChecked(in.readBoolean());
     }
 }
